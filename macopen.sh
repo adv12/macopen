@@ -1,7 +1,7 @@
 #!/bin/sh
 
 usage() {
-	echo "Usage: macopen [-u <eduser>] [-h <host>] [-U <fsuser>] <filename> [<filename2>...<filenameN>] [-A openArguments]"
+  echo "Usage: macopen [-u <eduser>] [-h <host>] [-U <fsuser>] <filename> [<filename2>...<filenameN>] [-A openArguments]"
   echo "Help: Connects via SSH to the specified Mac, mounts this host's filesystem via SSHFS,"
   echo "      and opens the specified file(s) using the 'open' command."
   echo "Options:"
@@ -17,11 +17,11 @@ usage() {
 # -u command-line option.
 
 if [ -z "$ED_USER" ]; then
-	ED_USER="$MACOPEN_USER"
+    ED_USER="$MACOPEN_USER"
 fi
 
 if [ -z "$ED_USER" ]; then
-	ED_USER="$USER"
+    ED_USER="$USER"
 fi
 
 # Set the ED_HOST variable that determines what Mac we'll connect to via SSH.
@@ -29,11 +29,11 @@ fi
 # environment variable.  This can be overridden by the -h command-line option.  
 
 if [ -z "$ED_HOST" ]; then
-	ED_HOST="$MACOPEN_HOST"
+    ED_HOST="$MACOPEN_HOST"
 fi
 
 if [ -z "$ED_HOST" ]; then
-	ED_HOST=$(echo "$SSH_CLIENT" | sed 's/ .*//')
+    ED_HOST=$(echo "$SSH_CLIENT" | sed 's/ .*//')
 fi
 
 # Set the FS_HOST variable that tells the Mac what machine's filesystem to mount.
@@ -49,19 +49,19 @@ FS_USER="$USER"
 
 # parse the command-line options using bash's built-in getopts
 
-while getopts ":u:h:U:h:" opt; do
+while getopts ":u:h:U:H:" opt; do
   case $opt in
     u)
       ED_USER="$OPTARG"
       ;;
     h)
-    	ED_HOST="$OPTARG"
-    	;;
+      ED_HOST="$OPTARG"
+      ;;
     U)
-    	FS_USER="$OPTARG"
-        ;;
+      FS_USER="$OPTARG"
+      ;;
     H)
-        FS_HOST="$OPTARG"
+      FS_HOST="$OPTARG"
       ;;
     \?)
       echo "Invalid option: -$OPTARG" >&2
@@ -88,8 +88,8 @@ MOUNT_DIR="$MOUNTS_DIR/$FS_USER@$FS_HOST"
 
 while [ -n "$1" ] && [ "$1" != "-A" ]
 do
-	FILENAME=`basename $1`
-	DIRNAME=$(cd "$(dirname "$1")"; pwd)
+  FILENAME=`basename $1`
+  DIRNAME=$(cd "$(dirname "$1")"; pwd)
         LOCAL_PATH=$(echo "$DIRNAME/$FILENAME" | sed 's|^/||')
         FS_PATH="$MOUNT_DIR/$LOCAL_PATH"
         if [ -n "$FS_PATHS" ]; then
@@ -97,28 +97,25 @@ do
         else
            FS_PATHS="\"$FS_PATH\""
         fi
-	shift
+  shift
 done
 
 if [ -z "$FS_PATHS" ]; then
-	echo "No filename specifed." >&2
-	usage
-	exit 1
+    echo "No filename specifed." >&2
+    usage
+    exit 1
 fi
 
 if [ -z "$ED_HOST" ]; then
-	echo "No host specified.  You have three options:"
-	echo "  1) Export SSH_CLIENT in your .bashrc (bash unexports it under certain circumstances),"
-	echo "  2) Set the MACOPEN_HOST environment variable, or"
-	echo "  3) Specify the host on the command line via the -h option"
+    echo "No host specified.  You have three options:"
+    echo "  1) Export SSH_CLIENT in your .bashrc (bash unexports it under certain circumstances),"
+    echo "  2) Set the MACOPEN_HOST environment variable, or"
+    echo "  3) Specify the host on the command line via the -h option"
 fi
 
 echo "FS_PATHS=$FS_PATHS"
 
-MOUNT_AND_OPEN_SCRIPT=$(cat << 'EOF'
-
-MOUNTS_DIR=$MOUNTS_DIR
-MOUNT_DIR="$MOUNT_DIR"
+MOUNT_AND_OPEN_SCRIPT=$(cat <<EOF
 
 if [ ! -d "$MOUNTS_DIR" ]; then
  mkdir "$MOUNTS_DIR"
@@ -149,6 +146,8 @@ FS_HOST="$FS_HOST"
 FS_USER="$FS_USER"
 FS_PATHS="$FS_PATHS"
 OPEN_ARGS="$OPEN_ARGS"
+MOUNTS_DIR="$MOUNTS_DIR"
+MOUNT_DIR="$MOUNT_DIR"
 
 $MOUNT_AND_OPEN_SCRIPT
 
