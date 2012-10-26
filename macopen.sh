@@ -8,7 +8,7 @@ usage() {
   echo "      -u Connects to the Mac as the specified user"
   echo "      -h Connects to the specified host"
   echo "      -U Mounts this host's filesystem as the specified user"
-  echo "      -H Overrides the host name for the connection to this host's filesystem
+  echo "      -H Overrides the host name for the connection to this host's filesystem"
 }
 
 # Set the ED_USER variable that determines the user with which we'll log into
