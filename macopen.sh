@@ -7,7 +7,8 @@ usage() {
   echo "Options:"
   echo "      -u Connects to the Mac as the specified user"
   echo "      -h Connects to the specified host"
-  echo "      -U Mounts this hosts's filesystem as the specified user"
+  echo "      -U Mounts this host's filesystem as the specified user"
+  echo "      -H Overrides the host name for the connection to this host's filesystem
 }
 
 # Set the ED_USER variable that determines the user with which we'll log into
@@ -82,7 +83,7 @@ echo "after getopts, OPTIND=$OPTIND and \$1=$1"
 OPEN_ARGS=""
 FS_PATHS=""
 
-MOUNTS_DIR='$HOME/.remopen_mounts'
+MOUNTS_DIR='$HOME/.macopen_mounts'
 MOUNT_DIR="$MOUNTS_DIR/$FS_USER@$FS_HOST"
 
 while [ -n "$1" ] && [ "$1" != "-A" ]
