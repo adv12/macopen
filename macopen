@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 usage() {
   echo "Usage: macopen [-u <eduser>] [-h <host>] [-U <fsuser>] <filename> [<filename2>...<filenameN>] [-A openArguments]"
