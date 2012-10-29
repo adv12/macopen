@@ -170,7 +170,7 @@ FS_PATHS_STRING=`printf "'%s' " "${FS_PATHS[@]}"`
 OPEN_ARGS_STRING=`printf "'%s' " "${OPEN_ARGS[@]}"`
 APP_ARGS_STRING=`printf "'%s' " "${APP_ARGS[@]}"`
 
-eval "echo open $OPEN_ARGS_STRING $FS_PATHS_STRING $APP_ARGS_STRING"
+#eval "echo open $OPEN_ARGS_STRING $FS_PATHS_STRING $APP_ARGS_STRING"
 
 eval "open $OPEN_ARGS_STRING $FS_PATHS_STRING $APP_ARGS_STRING"
 
