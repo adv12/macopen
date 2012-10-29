@@ -7,4 +7,3 @@ To get this to work, install OSXFuse and SSHFS, both available for download from
 
 Note that the machines have to be able to route to one another, so no NAT support right now.  I read a little about SSH tunneling/reverse SSH, which might be able to help when your Mac is behind NAT.
 
-I planned to allow arguments to be passed through to the open command but didn't get around to it.  Maybe in the next few days.
