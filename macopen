@@ -1,7 +1,7 @@
 #!/bin/bash
 
 usage() {
-  echo "Usage: macopen [-u <eduser>] [-h <host>] [-U <fsuser>] [-H <fshost>] [-e] [-t] [-f] [-W] [-R] [-n] [-g] [-h] [-b <bundle identifier>] [-a <application>] <filename> [<filename2>...<filenameN>] [--args arguments]"
+  echo "Usage: macopen [-u <eduser>] [-h <host>] [-U <fsuser>] [-H <fshost>] [-e] [-t] [-f] [-W] [-R] [-n] [-g] [-h] [-b <bundle identifier>] [-a <application>] [filenames] [--args arguments]"
   echo "Help: Connects via SSH to the specified Mac, mounts this host's filesystem "
   echo "      via SSHFS, and opens the specified file(s) using the 'open' command."
   echo "Options (macopen-specific):"
@@ -118,12 +118,6 @@ do
   shift
 done
 
-if [ ${#FS_PATHS[@]} -eq 0 ]; then
-  echo "No filename specifed." >&2
-  usage
-  exit 1
-fi
-
 if [ "$1" == "--args" ]; then
   APP_ARGS=( "--args" )
   shift
@@ -147,19 +141,23 @@ MOUNT_AND_OPEN_SCRIPT=$(cat <<'EOF'
 
 #printf "%s\n" "${FS_PATHS[@]}"
 
-if [ ! -d "$MOUNTS_DIR" ]; then
- mkdir "$MOUNTS_DIR"
-fi
+if [ ${#FS_PATHS[@]} -ne 0 ]; then
 
-if [ ! -d "$MOUNT_DIR" ]; then
-  mkdir "$MOUNT_DIR"
-fi
+  if [ ! -d "$MOUNTS_DIR" ]; then
+   mkdir "$MOUNTS_DIR"
+  fi
 
-if mount | grep "$MOUNT_DIR" > /dev/null; then
-  #echo "filesystem $MOUNT_DIR already mounted"
-  :
-else
-  /usr/local/bin/sshfs -o follow_symlinks,volname=$FS_HOST $FS_USER@$FS_HOST:/ "$MOUNT_DIR"
+  if [ ! -d "$MOUNT_DIR" ]; then
+    mkdir "$MOUNT_DIR"
+  fi
+
+  if mount | grep "$MOUNT_DIR" > /dev/null; then
+    #echo "filesystem $MOUNT_DIR already mounted"
+    :
+  else
+    /usr/local/bin/sshfs -o follow_symlinks,volname=$FS_HOST $FS_USER@$FS_HOST:/ "$MOUNT_DIR"
+  fi
+
 fi
 
 FS_PATHS_STRING=`printf "'%s' " "${FS_PATHS[@]}"`
