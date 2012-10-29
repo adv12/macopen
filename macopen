@@ -187,7 +187,7 @@ APP_ARGS_STRING=`printf "\"%s\" " "${APP_ARGS[@]}"`
 
 echo "trying ssh ${ED_USER}@${ED_HOST}"
 
-ssh "${ED_USER}@${ED_HOST}" <<EOF
+ssh "${ED_USER}@${ED_HOST}" 'bash -s' <<EOF
 
 FS_HOST="$FS_HOST"
 FS_USER="$FS_USER"
