@@ -7,3 +7,4 @@ To get this to work, install OSXFuse and SSHFS, both available for download from
 
 Note that the machines have to be able to route to one another, so no NAT support right now.  I read a little about SSH tunneling/reverse SSH, which might be able to help when your Mac is behind NAT.
 
+There's a little more detail in this [blog post](http://andrewscode.blogspot.com/2012/10/macopen-bash-script-to-open-and-edit.html).
