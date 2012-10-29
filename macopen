@@ -20,8 +20,8 @@ usage() {
   echo "      -R Reveals the file(s) in the Finder instead of opening them."
   echo "      -n Open a new instance of the application even if one is already running."
   echo "      -g Does not bring the application to the foreground."
-	echo "      -j Launches the app hidden."
-	echo "      -z [translated to '-h'] Searches header file locations for headers matching the given filenames, and opens them."
+  echo "      -j Launches the app hidden."
+  echo "      -z [translated to '-h'] Searches header file locations for headers matching the given filenames, and opens them."
 }
 
 # Set the ED_USER variable that determines the user with which we'll log into
@@ -67,39 +67,39 @@ OPEN_ARGS=()
 APP_ARGS=()
 
 while getopts ":u:h:U:H:a:b:etFWRngjz" opt; do
-	case $opt in
-		u)
-			ED_USER="$OPTARG"
-			;;
-	  h)
-			ED_HOST="$OPTARG"
-			;;
-		U)
-			FS_USER="$OPTARG"
-			;;
-		H)
-			FS_HOST="$OPTARG"
-			;;
-		a|b)
-			OPEN_ARGS+=( "-$opt" "$OPTARG" )
-			;;
-		e|t|F|W|R|n|g|j)
-			OPEN_ARGS+=( "-$opt" )
-			;;
-		z)
-			OPEN_ARGS+=( "-h" )
-			;;
-		\?)
-	    echo "Invalid option: -$OPTARG" >&2
-	    usage
-	    exit 1
-			;;
-		:)
-	    echo "Option -$OPTARG requires an argument." >&2
-	    usage
-	    exit 1
-			;;
-	esac
+  case $opt in
+    u)
+      ED_USER="$OPTARG"
+      ;;
+    h)
+      ED_HOST="$OPTARG"
+      ;;
+    U)
+      FS_USER="$OPTARG"
+      ;;
+    H)
+      FS_HOST="$OPTARG"
+      ;;
+    a|b)
+      OPEN_ARGS+=( "-$opt" "$OPTARG" )
+      ;;
+    e|t|F|W|R|n|g|j)
+      OPEN_ARGS+=( "-$opt" )
+      ;;
+    z)
+      OPEN_ARGS+=( "-h" )
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      usage
+      exit 1
+      ;;
+    :)
+      echo "Option -$OPTARG requires an argument." >&2
+      usage
+      exit 1
+      ;;
+  esac
 done
 
 shift $((OPTIND-1))
@@ -114,7 +114,7 @@ do
   FILENAME=$(basename "$1")
   DIRNAME=$(cd "$(dirname "$1")"; pwd)
   LOCAL_PATH=$(echo "$DIRNAME/$FILENAME" | sed 's|^/||')
-	FS_PATHS+=( "$MOUNT_DIR/$LOCAL_PATH" )
+  FS_PATHS+=( "$MOUNT_DIR/$LOCAL_PATH" )
   shift
 done
 
@@ -125,13 +125,13 @@ if [ ${#FS_PATHS[@]} -eq 0 ]; then
 fi
 
 if [ "$1" == "--args" ]; then
-	APP_ARGS=( "--args" )
-	shift
-	while [ -n "$1" ]
-	do
-		APP_ARGS+=( "$1" )
-		shift
-	done
+  APP_ARGS=( "--args" )
+  shift
+  while [ -n "$1" ]
+  do
+    APP_ARGS+=( "$1" )
+    shift
+  done
 fi
 
 if [ -z "$ED_HOST" ]; then
