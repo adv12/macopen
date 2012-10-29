@@ -156,7 +156,8 @@ if [ ! -d "$MOUNT_DIR" ]; then
 fi
 
 if mount | grep "$MOUNT_DIR" > /dev/null; then
-  echo "filesystem $MOUNT_DIR already mounted"
+  #echo "filesystem $MOUNT_DIR already mounted"
+  :
 else
   /usr/local/bin/sshfs -o follow_symlinks,volname=$FS_HOST $FS_USER@$FS_HOST:/ "$MOUNT_DIR"
 fi
@@ -169,7 +170,7 @@ APP_ARGS_STRING=`printf "'%s' " "${APP_ARGS[@]}"`
 APP_ARGS_STRING=$(echo "$APP_ARGS_STRING" | sed "s/''//")
 
 
-eval "echo open \"$OPEN_ARGS_STRING\" \"$FS_PATHS_STRING\" \"$APP_ARGS_STRING\""
+#eval "echo open \"$OPEN_ARGS_STRING\" \"$FS_PATHS_STRING\" \"$APP_ARGS_STRING\""
 
 eval "open $OPEN_ARGS_STRING $FS_PATHS_STRING $APP_ARGS_STRING"
 
