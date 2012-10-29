@@ -24,6 +24,11 @@ usage() {
   echo "      -z [translated to '-h'] Searches header file locations for headers matching the given filenames, and opens them."
 }
 
+if [ "$#" -eq 0 ]; then
+  usage
+  exit 1
+fi
+
 # Set the ED_USER variable that determines the user with which we'll log into
 # the Mac.  Prefer the MACOPEN_USER environment variable; if that's empty,
 # default to the logged-in user on this host.  This can be overridden by the
