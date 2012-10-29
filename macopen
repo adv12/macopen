@@ -146,15 +146,11 @@ if [ -z "$ED_HOST" ]; then
   echo "  3) Specify the host on the command line via the -h option"
 fi
 
-printf "%s\n" "${FS_PATHS[@]}"
-
-FS_PATHS=("${FS_PATHS[@]}") 
-
-printf "%s\n" "${FS_PATHS[@]}"
+#printf "%s\n" "${FS_PATHS[@]}"
 
 MOUNT_AND_OPEN_SCRIPT=$(cat <<'EOF'
 
-printf "%s\n" "${FS_PATHS[@]}"
+#printf "%s\n" "${FS_PATHS[@]}"
 
 if [ ! -d "$MOUNTS_DIR" ]; then
  mkdir "$MOUNTS_DIR"
@@ -185,7 +181,7 @@ FS_PATHS_STRING=`printf "\"%s\" " "${FS_PATHS[@]}"`
 OPEN_ARGS_STRING=`printf "\"%s\" " "${OPEN_ARGS[@]}"`
 APP_ARGS_STRING=`printf "\"%s\" " "${APP_ARGS[@]}"`
 
-echo "trying ssh ${ED_USER}@${ED_HOST}"
+#echo "trying ssh ${ED_USER}@${ED_HOST}"
 
 ssh "${ED_USER}@${ED_HOST}" 'bash -s' <<EOF
 
