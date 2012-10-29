@@ -162,10 +162,14 @@ else
 fi
 
 FS_PATHS_STRING=`printf "'%s' " "${FS_PATHS[@]}"`
+FS_PATHS_STRING=$(echo "$FS_PATHS_STRING" | sed "s/''//")
 OPEN_ARGS_STRING=`printf "'%s' " "${OPEN_ARGS[@]}"`
+OPEN_ARGS_STRING=$(echo "$OPEN_ARGS_STRING" | sed "s/''//")
 APP_ARGS_STRING=`printf "'%s' " "${APP_ARGS[@]}"`
+APP_ARGS_STRING=$(echo "$APP_ARGS_STRING" | sed "s/''//")
 
-#eval "echo open $OPEN_ARGS_STRING $FS_PATHS_STRING $APP_ARGS_STRING"
+
+eval "echo open \"$OPEN_ARGS_STRING\" \"$FS_PATHS_STRING\" \"$APP_ARGS_STRING\""
 
 eval "open $OPEN_ARGS_STRING $FS_PATHS_STRING $APP_ARGS_STRING"
 
@@ -182,7 +186,7 @@ ssh "${ED_USER}@${ED_HOST}" 'bash -s' <<EOF
 
 FS_HOST="$FS_HOST"
 FS_USER="$FS_USER"
-FS_PATHS=($FS_PATHS_STRING) 
+FS_PATHS=($FS_PATHS_STRING)
 OPEN_ARGS=($OPEN_ARGS_STRING)
 APP_ARGS=($APP_ARGS_STRING)
 MOUNTS_DIR="$MOUNTS_DIR"
